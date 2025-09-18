@@ -41,11 +41,11 @@ const NavBar: React.FC = () => {
         <nav className="hidden md:flex gap-8 text-sm text-white items-center">
           <div className="relative group">
             <Link to="/product-list" className="hover:text-red-500">
-              PRODUCT
+              Shopping Cart
             </Link>
           </div>
           <div className="relative group">
-            <button className="hover:text-red-500">GIẢI ĐẤU ▾</button>
+            <button className="hover:text-red-500">Products ▾</button>
             <div className="absolute top-full left-0 mt-2 w-48 bg-sky-600 border border-sky-700 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
               <ul className="py-2">
                 <li>
@@ -53,7 +53,7 @@ const NavBar: React.FC = () => {
                     to="/"
                     className="block px-4 py-2 text-sm text-white hover:bg-sky-700"
                   >
-                    TP Hồ Chí Minh
+                    SamSung
                   </Link>
                 </li>
                 <li>
@@ -61,8 +61,40 @@ const NavBar: React.FC = () => {
                     to="/"
                     className="block px-4 py-2 text-sm text-white hover:bg-sky-700"
                   >
-                    Toàn Quốc
+                    Apple
                   </Link>
+                </li>
+                <li>
+                    <Link
+                        to=""
+                        className="block px-4 py-2 text-sm text-white hover:bg-sky-700"
+                    >
+                        Oppo
+                    </Link>
+                </li>
+                <li>
+                    <Link
+                        to=""
+                        className="block px-4 py-2 text-sm text-white hover:bg-sky-700"
+                    >
+                        Xiaomi
+                    </Link>
+                </li>
+                <li>
+                    <Link
+                        to=""
+                        className="block px-4 py-2 text-sm text-white hover:bg-sky-700"
+                    >
+                        Realme
+                    </Link>
+                </li>
+                <li>
+                    <Link
+                        to=""
+                        className="block px-4 py-2 text-sm text-white hover:bg-sky-700"
+                    >
+                        Vivo
+                    </Link>
                 </li>
               </ul>
             </div>

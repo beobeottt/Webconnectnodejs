@@ -1,4 +1,4 @@
-import { typeProduct } from "../models/common";
+import { User } from "../models/common";
 
 export interface Product{
     id: string;
@@ -6,7 +6,5 @@ export interface Product{
     description: string;
     price: number;
     quantity: number;
-    discount_code: string;
-    typeProduct: typeProduct;
-    shipping_address: string;
+    typeProduct: "New Product" | "Best Seller";
 }
