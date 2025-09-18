@@ -1,34 +1,37 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { X, Menu } from "lucide-react"; // cài: pnpm add lucide-react
+import { X, Menu } from "lucide-react";
 
 const NavBar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // trạng thái login
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [role, setRole] = useState<string | null>(null);
   const [accountMenu, setAccountMenu] = useState(false);
   const navigate = useNavigate();
 
+  // Kiểm tra role từ localStorage khi load NavBar
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
+    const savedRole = localStorage.getItem("role");
+    if (savedRole) {
+      setIsLoggedIn(true);
+      setRole(savedRole);
     }
-  }, [isOpen]);
+  }, []);
 
-  const handleLogin = () => {
-    setIsLoggedIn(true);
-    navigate("/account");
-  };
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "auto";
+  }, [isOpen]);
 
   const handleLogout = () => {
     setIsLoggedIn(false);
     setAccountMenu(false);
+    setRole(null);
+    localStorage.removeItem("role");
     navigate("/");
   };
 
   return (
-    <div className="bg-orange-500"> {/* ✅ Sửa ở đây */}
+    <div className="bg-orange-500">
       {/* Top Bar */}
       <div className="flex justify-between items-center px-6 py-4 bg-sky-500 border-b border-orange-600">
         <Link to="/">
@@ -39,45 +42,32 @@ const NavBar: React.FC = () => {
 
         {/* Nav desktop */}
         <nav className="hidden md:flex gap-8 text-sm text-white items-center">
-          <div className="relative group">
-            <Link to="/product-list" className="hover:text-red-500">
-              PRODUCT
+          <Link to="/product-list" className="hover:text-red-500">
+            PRODUCT
+          </Link>
+
+          {/* Nếu admin thì hiện Dashboard */}
+          {role === "admin" && (
+            <Link to="/dashboard" className="hover:text-yellow-400 font-semibold">
+              Dashboard
             </Link>
-          </div>
-          <div className="relative group">
-            <button className="hover:text-red-500">GIẢI ĐẤU ▾</button>
-            <div className="absolute top-full left-0 mt-2 w-48 bg-sky-600 border border-sky-700 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-              <ul className="py-2">
-                <li>
-                  <Link
-                    to="/"
-                    className="block px-4 py-2 text-sm text-white hover:bg-sky-700"
-                  >
-                    TP Hồ Chí Minh
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/"
-                    className="block px-4 py-2 text-sm text-white hover:bg-sky-700"
-                  >
-                    Toàn Quốc
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </div>
+          )}
 
           {/* Login/Register hoặc Account */}
           {!isLoggedIn ? (
             <div className="flex gap-4">
-              <button className="px-4 py-2 border border-white rounded-lg hover:bg-red-500 hover:text-white">
-                <Link to="/login">Login</Link>
-              </button>
-
-              <button className="px-4 py-2 border border-white rounded-lg hover:bg-red-500 hover:text-white">
-                <Link to="/register">Register</Link>
-              </button>
+              <Link
+                to="/login"
+                className="px-4 py-2 border border-white rounded-lg hover:bg-red-500 hover:text-white"
+              >
+                Login
+              </Link>
+              <Link
+                to="/register"
+                className="px-4 py-2 border border-white rounded-lg hover:bg-red-500 hover:text-white"
+              >
+                Register
+              </Link>
             </div>
           ) : (
             <div className="relative">
@@ -113,13 +103,13 @@ const NavBar: React.FC = () => {
           )}
         </nav>
 
-        {/* Menu icon (Mobile only) */}
+        {/* Mobile menu icon */}
         <button className="md:hidden text-white" onClick={() => setIsOpen(true)}>
           <Menu size={28} />
         </button>
       </div>
 
-      {/* Sidebar Mobile Menu */}
+      {/* Sidebar Mobile */}
       <div
         className={`fixed top-0 right-0 h-full w-64 bg-white z-50 shadow-lg transform transition-transform duration-300 ease-in-out ${
           isOpen ? "translate-x-0" : "translate-x-full"
@@ -136,17 +126,21 @@ const NavBar: React.FC = () => {
             TRANG CHỦ
           </Link>
 
+          {role === "admin" && (
+            <Link to="/dashboard" onClick={() => setIsOpen(false)}>
+              Dashboard
+            </Link>
+          )}
+
           {!isLoggedIn ? (
             <div className="flex flex-col gap-4">
-              <button
-                onClick={() => {
-                  handleLogin();
-                  setIsOpen(false);
-                }}
+              <Link
+                to="/login"
+                onClick={() => setIsOpen(false)}
                 className="px-4 py-2 bg-red-500 rounded-lg hover:bg-red-600 text-white"
               >
                 Đăng nhập
-              </button>
+              </Link>
               <Link
                 to="/register"
                 onClick={() => setIsOpen(false)}

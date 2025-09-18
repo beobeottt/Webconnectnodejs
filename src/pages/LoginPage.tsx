@@ -2,15 +2,24 @@ import React, { useState } from "react";
 import { Facebook, Chrome } from "lucide-react";
 import NavBar from "./NavBar";
 
-const LoginPage: React.FC = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+import { useNavigate } from "react-router-dom";
 
-    const handleLogin = (e: React.FormEvent) => {
-        e.preventDefault();
-        console.log("Email:", email, "Password:", password);
-        // TODO: gọi API login ở đây
-    };
+const LoginPage: React.FC = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Kiểm tra tài khoản admin tạm thời
+    if (email === "ad" && password === "1") {
+      localStorage.setItem("role", "admin"); // lưu role để NavBar dùng
+      navigate("/"); // quay về HomePage
+    } else {
+      alert("Sai tài khoản hoặc mật khẩu");
+    }
+  };
 
     return (
         <div>
