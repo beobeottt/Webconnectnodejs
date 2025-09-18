@@ -48,7 +48,7 @@ const NavBar: React.FC = () => {
 
           {/* Nếu admin thì hiện Dashboard */}
           {role === "admin" && (
-            <Link to="/dashboard" className="hover:text-yellow-400 font-semibold">
+            <Link to="/AdminDashboard" className="hover:text-yellow-400 font-semibold">
               Dashboard
             </Link>
           )}
@@ -127,7 +127,7 @@ const NavBar: React.FC = () => {
           </Link>
 
           {role === "admin" && (
-            <Link to="/dashboard" onClick={() => setIsOpen(false)}>
+            <Link to="/AdminDashboard" onClick={() => setIsOpen(false)}>
               Dashboard
             </Link>
           )}
