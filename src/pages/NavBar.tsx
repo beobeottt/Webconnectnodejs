@@ -53,6 +53,14 @@ const NavBar: React.FC = () => {
             </Link>
           )}
 
+          {/* Nếu manager thì hiện Dashboard */}
+          {role === "manager" && (
+            <Link to="/ManagerDashboard" className="hover:text-yellow-400 font-semibold">
+              Dashboard
+            </Link>
+          )}
+
+
           {/* Login/Register hoặc Account */}
           {!isLoggedIn ? (
             <div className="flex gap-4">

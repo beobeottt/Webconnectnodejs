@@ -16,7 +16,10 @@ const LoginPage: React.FC = () => {
     if (email === "ad" && password === "1") {
       localStorage.setItem("role", "admin"); // lưu role để NavBar dùng
       navigate("/"); // quay về HomePage
-    } else {
+    } else if (email === "manager" && password === "1") {
+      localStorage.setItem("role", "manager"); // lưu role để NavBar dùng
+      navigate("/"); // quay về HomePage
+    }  else {
       alert("Sai tài khoản hoặc mật khẩu");
     }
   };
