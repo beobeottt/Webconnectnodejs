@@ -1,32 +1,22 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { X, Menu } from "lucide-react";
+import { useAuth } from "../auth/useAuth"; 
+
 
 const NavBar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [role, setRole] = useState<string | null>(null);
   const [accountMenu, setAccountMenu] = useState(false);
+  const { role, user, logout } = useAuth(); 
   const navigate = useNavigate();
-
-  // Kiểm tra role từ localStorage khi load NavBar
-  useEffect(() => {
-    const savedRole = localStorage.getItem("role");
-    if (savedRole) {
-      setIsLoggedIn(true);
-      setRole(savedRole);
-    }
-  }, []);
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "auto";
   }, [isOpen]);
 
   const handleLogout = () => {
-    setIsLoggedIn(false);
+    logout();
     setAccountMenu(false);
-    setRole(null);
-    localStorage.removeItem("role");
     navigate("/");
   };
 
@@ -60,9 +50,8 @@ const NavBar: React.FC = () => {
             </Link>
           )}
 
-
           {/* Login/Register hoặc Account */}
-          {!isLoggedIn ? (
+          {!user ? (
             <div className="flex gap-4">
               <Link
                 to="/login"
@@ -140,7 +129,13 @@ const NavBar: React.FC = () => {
             </Link>
           )}
 
-          {!isLoggedIn ? (
+          {role === "manager" && (
+            <Link to="/ManagerDashboard" onClick={() => setIsOpen(false)}>
+              Dashboard
+            </Link>
+          )}
+
+          {!user ? (
             <div className="flex flex-col gap-4">
               <Link
                 to="/login"
