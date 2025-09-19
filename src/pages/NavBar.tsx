@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { X, Menu } from "lucide-react";
+import { X, Menu, ShoppingCart, Search } from "lucide-react";
 import { useAuth } from "../auth/useAuth";
 import ProfileModal from "./Profile"; // ✅ import modal
+
 
 const NavBar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,13 +31,32 @@ const NavBar: React.FC = () => {
             <span className="text-red-500">Duc</span>Bo
           </h1>
         </Link>
-
         {/* Nav desktop */}
         <nav className="hidden md:flex gap-8 text-sm text-white items-center">
-          <Link to="/product-list" className="hover:text-red-500">
-            PRODUCT
-          </Link>
+          {/* Hộp tìm kiếm */}
+          <div className="relative w-64">
+            <input
+              type="text"
+              placeholder="Tìm sản phẩm..."
+              className="w-full px-4 py-2 rounded-lg text-black focus:outline-none"
+            />
+            <button className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-sky-600">
+              <Search size={18} />
+            </button>
+          </div>
 
+          {/* Biểu tượng giỏ hàng */}
+          <Link
+            to="/cart"
+            className="relative flex items-center hover:text-yellow-400"
+          >
+            <ShoppingCart size={22} />
+            <span className="ml-1">Giỏ hàng</span>
+            {/* Badge số lượng sản phẩm */}
+            <span className="absolute -top-2 -right-3 bg-red-500 text-white text-xs px-1.5 py-0.5 rounded-full">
+              3
+            </span>
+          </Link>
           {/* Nếu admin thì hiện Dashboard */}
           {role === "admin" && (
             <Link
@@ -56,7 +76,7 @@ const NavBar: React.FC = () => {
               Dashboard
             </Link>
           )}
-
+          
           {/* Login/Register hoặc Account */}
           {!user ? (
             <div className="flex gap-4">
@@ -118,9 +138,8 @@ const NavBar: React.FC = () => {
 
       {/* Sidebar Mobile */}
       <div
-        className={`fixed top-0 right-0 h-full w-64 bg-white z-50 shadow-lg transform transition-transform duration-300 ease-in-out ${
-          isOpen ? "translate-x-0" : "translate-x-full"
-        }`}
+        className={`fixed top-0 right-0 h-full w-64 bg-white z-50 shadow-lg transform transition-transform duration-300 ease-in-out ${isOpen ? "translate-x-0" : "translate-x-full"
+          }`}
       >
         <div className="flex justify-between items-center p-4 border-b border-gray-200">
           <h2 className="text-lg font-bold">Menu</h2>

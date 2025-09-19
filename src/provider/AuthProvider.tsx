@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect, ReactNode } from "react";
 import { AuthContextType} from "../auth/types";
-import { UserRole } from "../models/roles";
-import { Account } from "../models/account";
+import { UserRole } from "../types/roles";
+import { Account } from "../types/account";
 import { login as authLogin, logout as authLogout } from "../auth/authServices";
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);

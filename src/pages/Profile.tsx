@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useAuth } from "../auth/useAuth";
-import { Account } from "../models/account";
-import { User } from "../models/user";
+import { Account } from "../types/account";
+import { User } from "../types/user";
 
 interface ProfileModalProps {
   isOpen: boolean;
