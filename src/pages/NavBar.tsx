@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { X, Menu } from "lucide-react";
-import { useAuth } from "../auth/useAuth"; 
-
+import { useAuth } from "../auth/useAuth";
+import ProfileModal from "./Profile"; // ✅ import modal
 
 const NavBar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [accountMenu, setAccountMenu] = useState(false);
-  const { role, user, logout } = useAuth(); 
+  const [isProfileOpen, setIsProfileOpen] = useState(false); // ✅ state modal
+  const { role, user, logout } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -38,14 +39,20 @@ const NavBar: React.FC = () => {
 
           {/* Nếu admin thì hiện Dashboard */}
           {role === "admin" && (
-            <Link to="/AdminDashboard" className="hover:text-yellow-400 font-semibold">
+            <Link
+              to="/AdminDashboard"
+              className="hover:text-yellow-400 font-semibold"
+            >
               Dashboard
             </Link>
           )}
 
           {/* Nếu manager thì hiện Dashboard */}
           {role === "manager" && (
-            <Link to="/ManagerDashboard" className="hover:text-yellow-400 font-semibold">
+            <Link
+              to="/ManagerDashboard"
+              className="hover:text-yellow-400 font-semibold"
+            >
               Dashboard
             </Link>
           )}
@@ -78,12 +85,15 @@ const NavBar: React.FC = () => {
                 <div className="absolute right-0 mt-2 w-40 bg-sky-600 border border-sky-700 rounded-md shadow-lg z-50">
                   <ul className="py-2">
                     <li>
-                      <Link
-                        to="/account"
-                        className="block px-4 py-2 text-sm text-white hover:bg-sky-700"
+                      <button
+                        onClick={() => {
+                          setIsProfileOpen(true); // ✅ mở modal
+                          setAccountMenu(false);
+                        }}
+                        className="w-full text-left block px-4 py-2 text-sm text-white hover:bg-sky-700"
                       >
                         Profile
-                      </Link>
+                      </button>
                     </li>
                     <li>
                       <button
@@ -154,13 +164,15 @@ const NavBar: React.FC = () => {
             </div>
           ) : (
             <div className="flex flex-col gap-2">
-              <Link
-                to="/account"
-                onClick={() => setIsOpen(false)}
+              <button
+                onClick={() => {
+                  setIsProfileOpen(true); // ✅ mở modal mobile
+                  setIsOpen(false);
+                }}
                 className="px-4 py-2 bg-gray-200 rounded-lg"
               >
                 Account
-              </Link>
+              </button>
               <button
                 onClick={() => {
                   handleLogout();
@@ -182,6 +194,12 @@ const NavBar: React.FC = () => {
           onClick={() => setIsOpen(false)}
         />
       )}
+
+      {/* ✅ Profile Modal */}
+      <ProfileModal
+        isOpen={isProfileOpen}
+        onClose={() => setIsProfileOpen(false)}
+      />
     </div>
   );
 };

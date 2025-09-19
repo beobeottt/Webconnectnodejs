@@ -9,7 +9,6 @@ const HomePage: React.FC = () =>
         <div className="bg-[#1e1f29] text-white min-h-screen font-sans">
             <NavBar/>
             <Categories/>
-            
         </div>
     );
 };
