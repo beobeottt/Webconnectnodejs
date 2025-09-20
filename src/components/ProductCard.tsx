@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Product } from "../types/Product";
+import { Product } from "../types/product";
 
 export const ProductCard = ({ id, name, description, price, quantity }: Product) => {
   const navigate = useNavigate();
